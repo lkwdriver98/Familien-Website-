@@ -1,8 +1,8 @@
 // Add-on: Supabase Sync (geräteübergreifend)
 (() => {
   // TODO: hier deine Supabase-Daten einsetzen:
-  const SUPABASE_URL = 'https://dpikqjeyxdziekqlggao.supabase.co';
-  const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRwaWtxamV5eGR6aWVrcWxnZ2FvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTc0MTIxNzUsImV4cCI6MjA3Mjk4ODE3NX0.s7CMgU5YjYBGvfDrGNhtFOWMAhqZVUo0TB3wM2f73BY';
+  const SUPABASE_URL = "https://dpikqjeyxdziekqlggao.supabase.co";
+  const SUPABASE_ANON = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRwaWtxamV5eGR6aWVrcWxnZ2FvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTc0MTIxNzUsImV4cCI6MjA3Mjk4ODE3NX0.s7CMgU5YjYBGvfDrGNhtFOWMAhqZVUo0TB3wM2f73BY";
 
   const $ = (s,r=document)=>r.querySelector(s);
   let supa = null;
@@ -81,4 +81,5 @@
   }
   if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',boot); else boot();
 })();
+
 
