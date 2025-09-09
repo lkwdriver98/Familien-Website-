@@ -1,65 +1,75 @@
-/* Grund-Styles im TechFlair-Look */
-:root {
-  --bg: #0b1220;
-  --card: #0f172a;
-  --border: #1f2937;
-  --text: #e5e7eb;
+/* TechFlair – ruhiges Dark-Theme */
+:root{
+  --bg:#0b1220;        /* tiefes Dunkelblau */
+  --card:#0f172a;      /* Panel */
+  --border:#1f2937;    /* Linien */
+  --text:#e5e7eb;      /* Text */
+  --muted:#94a3b8;     /* Sekundärtext */
+  --primary:#2563eb;   /* Blau */
+  --primary-2:#1d4ed8; /* Hover */
 }
 
-html, body {
-  background: var(--bg);
-  color: var(--text);
-  font-family: Inter, ui-sans-serif, system-ui;
+html,body{
+  background:var(--bg);
+  color:var(--text);
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif;
 }
 
-/* kleine Helfer-Klassen, ergänzend zu Tailwind */
-.card {
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: 1rem;
-  box-shadow: 0 6px 24px rgba(0,0,0,.35);
+/* Karten/Container */
+.card{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:16px;
+  box-shadow:0 6px 24px rgba(0,0,0,.25);
 }
 
-.btn {
-  border-radius: .75rem;
-  padding: .55rem .9rem;
+/* Inputs & Buttons – einheitlich */
+.input{
+  width:100%;
+  border:1px solid #243042;
+  background:rgba(9,14,26,.8);
+  color:var(--text);
+  border-radius:12px;
+  padding:.6rem .8rem;
 }
 
-.btn-ghost {
-  background: var(--bg);
-  border: 1px solid #243042;
+.input::placeholder{ color:#64748b; }
+
+.btn{
+  border-radius:12px;
+  padding:.55rem .9rem;
+  border:1px solid transparent;
 }
 
-.btn-ghost:hover { background: #121a2b; }
-
-.btn-primary {
-  background: #2563eb;
+.btn-primary{
+  background:var(--primary);
+  color:white;
 }
 
-.btn-primary:hover { background: #1d4ed8; }
+.btn-primary:hover{ background:var(--primary-2); }
 
-.input {
-  background: var(--bg);
-  border: 1px solid #243042;
-  color: var(--text);
-  border-radius: .75rem;
-  padding: .55rem .8rem;
-  width: 100%;
+.btn-ghost{
+  background:rgba(9,14,26,.8);
+  border:1px solid #243042;
 }
+.btn-ghost:hover{ background:#11192a; }
 
-.input::placeholder { color: #64748b; }
-
-.badge {
-  border: 1px solid #334155;
-  border-radius: .75rem;
-  padding: .35rem .6rem;
+/* Badge */
+.badge{
+  border:1px solid #334155;
+  border-radius:12px;
+  padding:.35rem .6rem;
+  color:var(--muted);
 }
 
 /* Dialog */
-dialog {
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: 1rem;
-  color: var(--text);
-  padding: 0;
+dialog{
+  background:var(--card);
+  color:var(--text);
+  border:1px solid var(--border);
+  border-radius:16px;
+  padding:0;
 }
+
+/* Überschriften etwas feiner */
+h1,h2,h3{ letter-spacing:-0.01em; }
