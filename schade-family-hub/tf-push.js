@@ -1,9 +1,9 @@
 // Add-on: Web Push + lokale Erinnerungen
 (() => {
   // TODO: Eigene Server-Infos eintragen:
-  const PUBLIC_VAPID  = 'PASTE_YOUR_PUBLIC_VAPID_KEY_HERE';
-  const SAVE_ENDPOINT = 'https://YOUR_PUSH_SERVER/save';
-  const TEST_ENDPOINT = 'https://YOUR_PUSH_SERVER/test';
+  const PUBLIC_VAPID  = '596350e914d67b8c96e66388b3195889';
+  const SAVE_ENDPOINT = 'https://schade-family-push.onrender.com/save';
+  const TEST_ENDPOINT = 'https://schade-family-push.onrender.com/test';
 
   const $ = (s,r=document)=>r.querySelector(s);
 
