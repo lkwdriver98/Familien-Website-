@@ -1,0 +1,65 @@
+/* Grund-Styles im TechFlair-Look */
+:root {
+  --bg: #0b1220;
+  --card: #0f172a;
+  --border: #1f2937;
+  --text: #e5e7eb;
+}
+
+html, body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: Inter, ui-sans-serif, system-ui;
+}
+
+/* kleine Helfer-Klassen, ergänzend zu Tailwind */
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 1rem;
+  box-shadow: 0 6px 24px rgba(0,0,0,.35);
+}
+
+.btn {
+  border-radius: .75rem;
+  padding: .55rem .9rem;
+}
+
+.btn-ghost {
+  background: var(--bg);
+  border: 1px solid #243042;
+}
+
+.btn-ghost:hover { background: #121a2b; }
+
+.btn-primary {
+  background: #2563eb;
+}
+
+.btn-primary:hover { background: #1d4ed8; }
+
+.input {
+  background: var(--bg);
+  border: 1px solid #243042;
+  color: var(--text);
+  border-radius: .75rem;
+  padding: .55rem .8rem;
+  width: 100%;
+}
+
+.input::placeholder { color: #64748b; }
+
+.badge {
+  border: 1px solid #334155;
+  border-radius: .75rem;
+  padding: .35rem .6rem;
+}
+
+/* Dialog */
+dialog {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 1rem;
+  color: var(--text);
+  padding: 0;
+}

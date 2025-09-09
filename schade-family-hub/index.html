@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>TechFlair Family Hub</title>
+    <meta name="description" content="Familien-Dashboard: Kalender, Essensplan, Einkaufsliste, Aufgaben & Kontakte.">
+    <!-- Tailwind via CDN (no build step needed) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              slate: tailwind.colors.slate
+            }
+          }
+        }
+      }
+    </script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="icon" type="image/png" href="./assets/logo.png">
+    <style>
+      html, body { background-color: #0b1220; }
+      .card { background: #0f172a; border: 1px solid #1f2937; }
+      .chip { background: rgba(59,130,246,.12); }
+      .input { background:#0b1220; border:1px solid #243042; color:#e5e7eb; }
+      .input::placeholder { color:#64748b; }
+    </style>
+  </head>
+  <body class="text-slate-100 min-h-screen flex flex-col">
+    <!-- Header -->
+    <header class="sticky top-0 z-30 backdrop-blur bg-[#0b1220]/80 border-b border-slate-800">
+      <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <div class="p-2 rounded-2xl shadow-lg bg-gradient-to-br from-cyan-400 to-blue-600">
+            <img src="./assets/logo.png" alt="TechFlair" class="w-7 h-7 rounded-xl object-cover">
+          </div>
+          <div class="leading-tight">
+            <div class="text-white font-semibold text-xl">TechFlair</div>
+            <div class="text-slate-400 text-xs">Family Hub</div>
+          </div>
+        </div>
+        <button id="openSettings" class="px-3 py-2 rounded-xl border border-slate-700 bg-slate-900 hover:bg-slate-800 text-sm">Einstellungen</button>
+      </div>
+    </header>
+
+    <!-- Hero -->
+    <section class="max-w-6xl mx-auto px-4 py-6 w-full">
+      <h1 class="text-3xl font-semibold tracking-tight">Willkommen, <span id="heroFamily" class="bg-gradient-to-r from-cyan-400 to-blue-600 bg-clip-text text-transparent">Familie</span></h1>
+      <p class="mt-2 text-slate-300">Alles im Blick: Termine, Essensplan, Einkauf, Aufgaben & Kontakte – im TechFlair‑Style.</p>
+    </section>
+
+    <!-- Tabs -->
+    <section class="max-w-6xl mx-auto px-4 w-full">
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-2">
+        <button data-tab="planner" class="tab chip px-3 py-2 rounded-xl text-sm border border-blue-900">Planer</button>
+        <button data-tab="shopping" class="tab chip px-3 py-2 rounded-xl text-sm border border-blue-900">Einkauf</button>
+        <button data-tab="chores" class="tab chip px-3 py-2 rounded-xl text-sm border border-blue-900">Aufgaben</button>
+        <button data-tab="contacts" class="tab chip px-3 py-2 rounded-xl text-sm border border-blue-900">Kontakte</button>
+      </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="max-w-6xl mx-auto px-4 py-6 grid lg:grid-cols-3 gap-6 w-full">
+      <!-- Calendar (span 2) -->
+      <section class="card rounded-2xl p-4 lg:col-span-2">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center gap-2">
+            <i data-lucide="calendar" class="w-5 h-5"></i>
+            <h2 class="font-semibold text-lg">Familienkalender</h2>
+          </div>
+          <a id="calendarLink" href="#" target="_blank" class="text-xs text-cyan-400 hidden">In neuem Tab öffnen ↗</a>
+        </div>
+        <div id="calendarEmbed" class="mt-3 w-full rounded-xl overflow-hidden border border-slate-800 aspect-[4/3] grid place-items-center text-slate-400 text-sm">
+          <div>Trage die <b>Google Kalender ID</b> in den Einstellungen ein.</div>
+        </div>
+      </section>
+
+      <!-- Meal Planner -->
+      <section class="card rounded-2xl p-4">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center gap-2">
+            <i data-lucide="chef-hat" class="w-5 h-5"></i>
+            <h2 class="font-semibold text-lg">Essensplan</h2>
+          </div>
+          <div class="flex gap-1">
+            <button id="prevWeek" class="px-2 py-1 rounded-lg border border-slate-700 bg-slate-900 hover:bg-slate-800">◀</button>
+            <button id="nextWeek" class="px-2 py-1 rounded-lg border border-slate-700 bg-slate-900 hover:bg-slate-800">▶</button>
+          </div>
+        </div>
+        <div id="weekLabel" class="text-slate-400 text-sm mt-1"></div>
+        <div id="mealGrid" class="mt-3 grid gap-2"></div>
+      </section>
+
+      <!-- Shopping (span 2) -->
+      <section class="card rounded-2xl p-4 lg:col-span-2">
+        <div class="flex items-center gap-2 mb-2">
+          <i data-lucide="shopping-cart" class="w-5 h-5"></i>
+          <h2 class="font-semibold text-lg">Einkaufsliste</h2>
+        </div>
+        <div class="flex gap-2">
+          <input id="shoppingInput" class="input rounded-xl px-3 py-2 flex-1" placeholder="Neuer Artikel…" />
+          <button id="shoppingAdd" class="px-3 py-2 rounded-xl bg-blue-600 hover:bg-blue-500">Hinzufügen</button>
+        </div>
+        <ul id="shoppingList" class="mt-3 space-y-2"></ul>
+      </section>
+
+      <!-- Chores -->
+      <section class="card rounded-2xl p-4">
+        <div class="flex items-center gap-2 mb-2">
+          <i data-lucide="check-square" class="w-5 h-5"></i>
+          <h2 class="font-semibold text-lg">Aufgaben</h2>
+        </div>
+        <div class="flex gap-2">
+          <input id="choreInput" class="input rounded-xl px-3 py-2 flex-1" placeholder="Neue Aufgabe…" />
+          <button id="choreAdd" class="px-3 py-2 rounded-xl bg-blue-600 hover:bg-blue-500">Hinzufügen</button>
+        </div>
+        <ul id="choreList" class="mt-3 space-y-2"></ul>
+      </section>
+
+      <!-- Contacts (span 3) -->
+      <section class="card rounded-2xl p-4 lg:col-span-3">
+        <div class="flex items-center gap-2 mb-2">
+          <i data-lucide="users" class="w-5 h-5"></i>
+          <h2 class="font-semibold text-lg">Familienkontakte</h2>
+        </div>
+        <div class="grid sm:grid-cols-4 gap-2">
+          <input id="cName" class="input rounded-xl px-3 py-2" placeholder="Name" />
+          <input id="cRole" class="input rounded-xl px-3 py-2" placeholder="Rolle" />
+          <input id="cPhone" class="input rounded-xl px-3 py-2" placeholder="Telefon" />
+          <input id="cEmail" class="input rounded-xl px-3 py-2" placeholder="E‑Mail" />
+        </div>
+        <div class="mt-2">
+          <button id="contactAdd" class="px-3 py-2 rounded-xl bg-blue-600 hover:bg-blue-500">Kontakt speichern</button>
+        </div>
+        <div id="contactGrid" class="mt-4 grid md:grid-cols-2 lg:grid-cols-3 gap-3"></div>
+      </section>
+    </main>
+
+    <!-- Settings Modal -->
+    <dialog id="settingsDlg" class="rounded-2xl p-0 w-[32rem] max-w-[92vw] text-slate-100 card">
+      <div class="p-4 border-b border-slate-800 font-semibold text-lg">Einstellungen</div>
+      <div class="p-4 space-y-3">
+        <div>
+          <label class="text-sm text-slate-300">Familienname</label>
+          <input id="sFamily" class="input rounded-xl px-3 py-2 w-full" placeholder="Familie" />
+        </div>
+        <div>
+          <label class="text-sm text-slate-300">Google Kalender ID (öffentlich)</label>
+          <input id="sCalendar" class="input rounded-xl px-3 py-2 w-full" placeholder="dein_kalender@gmail.com" />
+          <p class="text-xs text-slate-400 mt-1">Google Kalender → Einstellungen → Kalendereinstellungen → <em>Kalender-ID</em>. Kalender freigeben/nicht privat.</p>
+        </div>
+        <div>
+          <label class="text-sm text-slate-300">Zeitzone</label>
+          <input id="sTZ" class="input rounded-xl px-3 py-2 w-full" placeholder="Europe/Berlin" />
+        </div>
+        <div class="flex items-center gap-2">
+          <input id="sCompact" type="checkbox" />
+          <label for="sCompact" class="text-sm">Kompaktmodus</label>
+        </div>
+      </div>
+      <div class="p-4 border-t border-slate-800 flex justify-end gap-2">
+        <button id="sCancel" class="px-3 py-2 rounded-xl border border-slate-700">Abbrechen</button>
+        <button id="sSave" class="px-3 py-2 rounded-xl bg-blue-600 hover:bg-blue-500">Speichern</button>
+      </div>
+    </dialog>
+
+    <footer class="mt-auto border-t border-slate-800 py-6 text-center text-xs text-slate-500">
+      © <span id="year"></span> TechFlair Family Hub
+    </footer>
+
+    <script src="./app.js"></script>
+    <script>lucide.createIcons();</script>
+  </body>
+</html>
