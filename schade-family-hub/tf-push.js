@@ -1,7 +1,7 @@
 // Add-on: Web Push + lokale Erinnerungen
 (() => {
   // TODO: Eigene Server-Infos eintragen:
-  const PUBLIC_VAPID  = '596350e914d67b8c96e66388b3195889';
+  const PUBLIC_VAPID  = 'BB9qyg8tvtP1R0SUwENxStOdRIcXI3yJo-niOb6mK9NkqWZp2J0EO5UGNBhWBeKpk3e7m3lMWsGfy4b-1qdgADQ';
   const SAVE_ENDPOINT = 'https://schade-family-push.onrender.com/save';
   const TEST_ENDPOINT = 'https://schade-family-push.onrender.com/test';
 
@@ -60,3 +60,4 @@
 
   if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',injectUI); else injectUI();
 })();
+
