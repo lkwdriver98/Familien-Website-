@@ -1,0 +1,7 @@
+services:
+  - type: web
+    name: schade-family-hub
+    runtime: static
+    staticPublishPath: .
+    previews:
+      generation: automatic
