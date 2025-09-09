@@ -1,0 +1,7 @@
+{
+  "name": "schade-family-hub-server",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": { "start": "node server.js" },
+  "dependencies": { "express": "^4.21.1", "compression": "^1.7.4", "serve-static": "^1.15.0" }
+}
