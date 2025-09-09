@@ -1,7 +1,13 @@
 {
-  "name": "schade-family-hub-server",
+  "name": "schade-family-push",
   "version": "1.0.0",
   "type": "module",
-  "scripts": { "start": "node server.js" },
-  "dependencies": { "express": "^4.21.1", "compression": "^1.7.4", "serve-static": "^1.15.0" }
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.21.1",
+    "web-push": "^3.6.6"
+  }
 }

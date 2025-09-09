@@ -1,19 +1,34 @@
-import express from "express";
-import compression from "compression";
-import serveStatic from "serve-static";
-import path from "node:path";
-import { fileURLToPath } from "node:url";
+// Minimaler Web Push Server (Node + Express)
+// Installation lokal: npm i express web-push cors
+import express from 'express';
+import cors from 'cors';
+import webpush from 'web-push';
 
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const app = express();
-app.use(compression());
+app.use(cors());
+app.use(express.json());
 
-// Statisches Verzeichnis: dein fertiges Frontend
-const clientDir = path.join(__dirname, "..", "schade-family-hub");
-app.use(serveStatic(clientDir, { index: ["index.html"] }));
+// VAPID-Keys als ENV in Render setzen
+const VAPID_PUBLIC  = process.env.VAPID_PUBLIC;
+const VAPID_PRIVATE = process.env.VAPID_PRIVATE;
+webpush.setVapidDetails('mailto:you@example.com', VAPID_PUBLIC, VAPID_PRIVATE);
 
-// Fallback auf index.html (Single-Page)
-app.get("*", (_req, res) => res.sendFile(path.join(clientDir, "index.html")));
+// Simple In-Memory Store (für echte Nutzung in DB auslagern)
+const subs = new Set();
+
+app.post('/save', (req, res) => {
+  subs.add(req.body);
+  res.json({ ok: true });
+});
+
+app.post('/test', async (req, res) => {
+  const payload = JSON.stringify({ title:'Family Hub', body:'Test-Push 👋', url:'/' });
+  let sent = 0;
+  for (const sub of subs) {
+    try { await webpush.sendNotification(sub, payload); sent++; } catch (e) {}
+  }
+  res.json({ sent });
+});
 
 const port = process.env.PORT || 3000;
-app.listen(port, () => console.log("Family Hub running on :" + port));
+app.listen(port, () => console.log('Push server on :' + port));
